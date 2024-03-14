@@ -8,6 +8,7 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 
 export default function ProductCard({ name, price, quantity, imageUrls }) {
 
+
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
 
   React.useEffect(() => {
@@ -17,13 +18,33 @@ export default function ProductCard({ name, price, quantity, imageUrls }) {
 
     return () => clearInterval(interval);
   }, [imageUrls.length]);
+
   return (
     <Card sx={{ maxWidth: 345, margin: 'auto', boxShadow: '0px 3px 10px rgba(0,0,0,0.1)' }}>
       <CardMedia
-        sx={{ height: 200 }}
-        image={imageUrls[currentImageIndex]}
-        title={name}
-      />
+        sx={{
+          height: 200,
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        {imageUrls.map((imageUrl, index) => (
+          <img
+            key={index}
+            src={imageUrl}
+            alt={name}
+            style={{
+              width: '100%',
+              height: '100%',
+              position: 'absolute',
+              top: 0,
+              left: `${index * 100}%`,
+              transition: 'transform 0.9s ease-in-out',
+              transform: `translateX(-${currentImageIndex * 100}%)`,
+            }}
+          />
+        ))}
+      </CardMedia>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {name}
