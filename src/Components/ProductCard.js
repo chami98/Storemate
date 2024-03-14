@@ -4,7 +4,9 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
+import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
+
 
 export default function ProductCard({ name, price, quantity, imageUrls }) {
 
@@ -50,14 +52,15 @@ export default function ProductCard({ name, price, quantity, imageUrls }) {
           {name}
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', alignItems: 'center' }}>
-          <MonetizationOnIcon sx={{ marginRight: 1 }} />
+          <LocalOfferOutlinedIcon sx={{ marginRight: 0.5, fontSize: 'medium' }} />
           Price: ${price.toFixed(2)}
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', alignItems: 'center' }}>
-          <ShoppingCartIcon sx={{ marginRight: 1 }} />
+          <StorefrontOutlinedIcon sx={{ marginRight: 0.5, fontSize: 'medium' }} />
           Quantity: {quantity}
         </Typography>
       </CardContent>
+
     </Card>
   );
 }
