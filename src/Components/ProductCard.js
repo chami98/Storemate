@@ -25,7 +25,7 @@ export default function ProductCard({ name, price, quantity, imageUrls }) {
     <Card sx={{ maxWidth: 345, margin: 'auto', boxShadow: '0px 3px 10px rgba(0,0,0,0.1)' }}>
       <CardMedia
         sx={{
-          height: 200,
+          height: "30vh",
           position: 'relative',
           overflow: 'hidden',
         }}
