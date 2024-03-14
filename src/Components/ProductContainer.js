@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ProductCard from './ProductCard';
-import { Grid, Skeleton } from '@mui/material'; // Import Skeleton component
+import { Backdrop, CircularProgress, Grid, Skeleton, Typography } from '@mui/material';
 import Products from './Data/Products.json';
 
 export default function ProductContainer() {
@@ -22,7 +22,8 @@ export default function ProductContainer() {
         if (scrolledToBottom && !loading) {
             setLoading(true);
             setTimeout(() => {
-                setDisplayedProductCount(prevCount => prevCount + productsChunkSize);
+                const nextDisplayCount = Math.min(displayedProductCount + productsChunkSize, Products.length);
+                setDisplayedProductCount(nextDisplayCount);
                 setLoading(false);
             }, 1000);
         }
@@ -50,56 +51,17 @@ export default function ProductContainer() {
                             imageUrls={product.imageUrls}
                         />
                     </Grid>
-                ))}</Grid>
+                ))}
+            </Grid>
             {loading && (
-                <Grid container spacing={1} sx={{ padding: '20px' }}>
-                    <Grid item xs={12} sm={6} md={3}>
-                        <Skeleton variant="rectangular" sx={{ maxWidth: 345, margin: 'auto', boxShadow: '0px 3px 10px rgba(0,0,0,0.1)', height: 250 }}>
-                            <Skeleton variant="rectangular" sx={{ height: 200 }} />
-                            <Skeleton sx={{ padding: '1rem' }}>
-                                <Skeleton variant="text" sx={{ marginBottom: '0.5rem' }} />
-                                <Skeleton variant="text" sx={{ marginBottom: '0.5rem' }} />
-                                <Skeleton variant="text" sx={{ marginBottom: '0.5rem' }} />
-                            </Skeleton>
-                        </Skeleton>
-                    </Grid>
-
-                    <Grid item xs={12} sm={6} md={3}>
-                        <Skeleton variant="rectangular" sx={{ maxWidth: 345, margin: 'auto', boxShadow: '0px 3px 10px rgba(0,0,0,0.1)', height: 250 }}>
-                            <Skeleton variant="rectangular" sx={{ height: 200 }} />
-                            <Skeleton sx={{ padding: '1rem' }}>
-                                <Skeleton variant="text" sx={{ marginBottom: '0.5rem' }} />
-                                <Skeleton variant="text" sx={{ marginBottom: '0.5rem' }} />
-                                <Skeleton variant="text" sx={{ marginBottom: '0.5rem' }} />
-                            </Skeleton>
-                        </Skeleton>
-                    </Grid>
-
-                    <Grid item xs={12} sm={6} md={3}>
-                        <Skeleton variant="rectangular" sx={{ maxWidth: 345, margin: 'auto', boxShadow: '0px 3px 10px rgba(0,0,0,0.1)', height: 250 }}>
-                            <Skeleton variant="rectangular" sx={{ height: 200 }} />
-                            <Skeleton sx={{ padding: '1rem' }}>
-                                <Skeleton variant="text" sx={{ marginBottom: '0.5rem' }} />
-                                <Skeleton variant="text" sx={{ marginBottom: '0.5rem' }} />
-                                <Skeleton variant="text" sx={{ marginBottom: '0.5rem' }} />
-                            </Skeleton>
-                        </Skeleton>
-                    </Grid>
-
-                    <Grid item xs={12} sm={6} md={3}>
-                        <Skeleton variant="rectangular" sx={{ maxWidth: 345, margin: 'auto', boxShadow: '0px 3px 10px rgba(0,0,0,0.1)', height: 250 }}>
-                            <Skeleton variant="rectangular" sx={{ height: 200 }} />
-                            <Skeleton sx={{ padding: '1rem' }}>
-                                <Skeleton variant="text" sx={{ marginBottom: '0.5rem' }} />
-                                <Skeleton variant="text" sx={{ marginBottom: '0.5rem' }} />
-                                <Skeleton variant="text" sx={{ marginBottom: '0.5rem' }} />
-                            </Skeleton>
-                        </Skeleton>
-                    </Grid>
-                </Grid>
+                <Backdrop
+                    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                    open={loading}
+                >
+                    <CircularProgress color="inherit" />
+                    <Typography variant="h6" color="inherit" sx={{ ml: 2 }}>Loading more products...</Typography>
+                </Backdrop>
             )}
         </>
-
-
     );
 }
