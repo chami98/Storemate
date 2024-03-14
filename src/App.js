@@ -1,24 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
+import ProductCard from './Components/ProductCard';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <ProductCard name="IPhone" price={9.99} quantity={10} imageUrl="https://support.apple.com/library/content/dam/edam/applecare/images/en_US/iphone/fall-2023-iphone-colors-iphone-15-pro-max.png" />
+    </>
   );
 }
 
