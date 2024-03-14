@@ -13,7 +13,7 @@ export default function ProductCard({ name, price, quantity, imageUrls }) {
   React.useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex(prevIndex => (prevIndex + 1) % imageUrls.length);
-    }, 5000);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [imageUrls.length]);
@@ -22,7 +22,7 @@ export default function ProductCard({ name, price, quantity, imageUrls }) {
       <CardMedia
         sx={{ height: 200 }}
         image={imageUrls[currentImageIndex]}
-        title="Product Image"
+        title={name}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
