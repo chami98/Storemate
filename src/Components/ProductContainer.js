@@ -43,7 +43,7 @@ export default function ProductContainer() {
 
     return (
         <>
-            <Grid container spacing={2} sx={{ padding: '20px' }}>
+            <Grid container spacing={2} sx={{ padding: '60px' }}>
                 {products.map((product, index) => (
                     <Grid item key={index} xs={12} sm={6} md={3}>
                         <ProductCard
