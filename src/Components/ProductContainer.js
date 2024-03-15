@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ProductCard from './ProductCard';
-import { Backdrop, CircularProgress, Grid, Skeleton, Typography } from '@mui/material';
-import Products from './Data/Products.json';
+import { Backdrop, CircularProgress, Grid, Typography } from '@mui/material';
+import electronicsCatalog from './Data/electronicsCatalog.json';
 
 export default function ProductContainer() {
     const productsChunkSize = 8;
@@ -11,30 +11,22 @@ export default function ProductContainer() {
     const [allLoaded, setAllLoaded] = useState(false);
 
     const handleScroll = () => {
-        const scrollTop =
-            (document.documentElement && document.documentElement.scrollTop) ||
-            document.body.scrollTop;
-        const scrollHeight =
-            (document.documentElement && document.documentElement.scrollHeight) ||
-            document.body.scrollHeight;
-        const clientHeight =
-            document.documentElement.clientHeight || window.innerHeight;
+        const { scrollTop, scrollHeight, clientHeight } = document.documentElement || document.body;
         const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight - 600;
-        if (scrolledToBottom && !loading) {
+        if (scrolledToBottom && !loading && !allLoaded) {
             setLoading(true);
             setTimeout(() => {
-                const nextDisplayCount = Math.min(displayedProductCount + productsChunkSize, Products.length);
+                const nextDisplayCount = Math.min(displayedProductCount + productsChunkSize, electronicsCatalog.length);
                 setDisplayedProductCount(nextDisplayCount);
                 setLoading(false);
-                setAllLoaded(nextDisplayCount + productsChunkSize >= Products.length)
+                setAllLoaded(nextDisplayCount >= electronicsCatalog.length);
             }, 2000);
         }
     };
 
     useEffect(() => {
-        const displayedProducts = Products.slice(0, displayedProductCount);
+        const displayedProducts = electronicsCatalog.slice(0, displayedProductCount);
         setProducts(displayedProducts);
-
         window.addEventListener('scroll', handleScroll);
         return () => {
             window.removeEventListener('scroll', handleScroll);
@@ -42,32 +34,23 @@ export default function ProductContainer() {
     }, [displayedProductCount]);
 
     return (
-        <>
-            <Grid container spacing={2} sx={{ padding: '60px' }}>
-                {products.map((product, index) => (
-                    <Grid item key={index} xs={12} sm={6} md={3}>
-                        <ProductCard
-                            name={product.name}
-                            price={product.price}
-                            quantity={product.quantity}
-                            imageUrls={product.imageUrls}
-                        />
-                    </Grid>
-                ))}
-            </Grid>
-            {!allLoaded && (
-                <Grid container spacing={2} sx={{ paddingLeft: '20px', paddingRight: '20px' }}>
-                    <Backdrop
-                        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                        open={loading}
-                    >
-                        <CircularProgress color="inherit" />
-                        <Typography variant="h6" color="inherit" sx={{ ml: 2 }}>Loading more products...</Typography>
-                    </Backdrop>
+        <Grid container spacing={2} sx={{ padding: '60px' }}>
+            {products.map((product, index) => (
+                <Grid item key={index} xs={12} sm={6} md={3}>
+                    <ProductCard
+                        name={product.name}
+                        price={product.price}
+                        quantity={product.quantity}
+                        imageUrls={product.imageUrls}
+                    />
                 </Grid>
+            ))}
+            {!allLoaded && (
+                <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={loading}>
+                    <CircularProgress color="inherit" />
+                    <Typography variant="h6" color="inherit" sx={{ ml: 2 }}>Loading more products...</Typography>
+                </Backdrop>
             )}
-
-            { }
-        </>
+        </Grid>
     );
 }
