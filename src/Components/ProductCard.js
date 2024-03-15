@@ -22,7 +22,15 @@ export default function ProductCard({ name, price, quantity, imageUrls }) {
   }, [imageUrls.length]);
 
   return (
-    <Card sx={{ maxWidth: 345, margin: 'auto', boxShadow: '0px 3px 10px rgba(0,0,0,0.1)' }}>
+    <Card sx={{
+      maxWidth: 345,
+      margin: 'auto',
+      boxShadow: '0px 3px 10px rgba(0,0,0,0.1)',
+      transition: 'transform 0.3s ease-in-out',
+      '&:hover': {
+        transform: 'scale(1.04)',
+      },
+    }}>
       <CardMedia
         sx={{
           height: "30vh",
