@@ -1,19 +1,15 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 
-
 export default function ProductCard({ name, price, quantity, imageUrls }) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-
-  const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
-
-  React.useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex(prevIndex => (prevIndex + 1) % imageUrls.length);
     }, 3000);
@@ -22,15 +18,17 @@ export default function ProductCard({ name, price, quantity, imageUrls }) {
   }, [imageUrls.length]);
 
   return (
-    <Card sx={{
-      maxWidth: 345,
-      margin: 'auto',
-      boxShadow: '0px 3px 10px rgba(0,0,0,0.1)',
-      transition: 'transform 0.3s ease-in-out',
-      '&:hover': {
-        transform: 'scale(1.04)',
-      },
-    }}>
+    <Card
+      sx={{
+        maxWidth: 345,
+        margin: 'auto',
+        boxShadow: '0px 3px 10px rgba(0,0,0,0.1)',
+        transition: 'transform 0.3s ease-in-out',
+        '&:hover': {
+          transform: 'scale(1.04)',
+        },
+      }}
+    >
       <CardMedia
         sx={{
           height: "30vh",
@@ -68,7 +66,6 @@ export default function ProductCard({ name, price, quantity, imageUrls }) {
           Quantity: {quantity}
         </Typography>
       </CardContent>
-
     </Card>
   );
 }
